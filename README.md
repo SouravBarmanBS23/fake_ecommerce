@@ -7,4 +7,4 @@
 - Dio
 
 
-## Api used -> [https://fakestoreapi.com/docs]
+### Api used -> https://fakestoreapi.com/docs
