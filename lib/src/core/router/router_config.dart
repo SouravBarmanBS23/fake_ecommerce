@@ -1,0 +1,76 @@
+import 'package:fake_ecommerce/src/core/router/routers.dart';
+import 'package:fake_ecommerce/src/features/cart/presentation/pages/cart_page.dart';
+import 'package:fake_ecommerce/src/features/home_product/home/presentation/home_page.dart';
+import 'package:fake_ecommerce/src/features/home_product/home/presentation/main_page.dart';
+import 'package:fake_ecommerce/src/features/settings/presentation/pages/setting_page.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:go_router/go_router.dart';
+
+
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import '../../features/category_product/presentation/pages/category_page.dart';
+
+
+final GlobalKey<NavigatorState> _rootState = GlobalKey(debugLabel: 'root');
+final GlobalKey<NavigatorState> _shellState = GlobalKey(debugLabel: 'shell');
+
+
+final goRouterProvider = Provider<GoRouter>((ref){
+  return GoRouter(
+      initialLocation: '/home',
+      navigatorKey: _rootState,
+      routes: [
+        GoRoute(
+            name: RoutersName.root,
+            path: '/home',
+            builder: (context,state) => HomePage(key: state.pageKey,)
+        ),
+
+        ShellRoute(
+          navigatorKey: _shellState,
+          builder: (context,state,child) => MainPage(key: state.pageKey,child: child),
+          routes: [
+            GoRoute(
+                name: RoutersName.home,
+                path: '/',
+              pageBuilder: (context,state){
+                  return NoTransitionPage(child: HomePage(key: state.pageKey,));
+              }
+            ),
+            GoRoute(
+                name: RoutersName.category,
+                path: '/category',
+                pageBuilder: (context,state){
+                  return NoTransitionPage(child: CategoryPage(key: state.pageKey,));
+                }
+            ),
+            GoRoute(
+                name: RoutersName.cart,
+                path: '/cart',
+                pageBuilder: (context,state){
+                  return NoTransitionPage(child: CartPage(key: state.pageKey,));
+                }
+            ),
+            GoRoute(
+                name: RoutersName.settings,
+                path: '/setting',
+                pageBuilder: (context,state){
+                  return NoTransitionPage(child: SettingPage(key: state.pageKey,));
+                }
+            ),
+
+
+
+          ]
+        )
+
+
+      ]
+
+  );
+
+
+
+
+});
