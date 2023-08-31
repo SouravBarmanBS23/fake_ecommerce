@@ -5,6 +5,7 @@
 - Clean Architecture
 - Riverpod
 - Dio
+- GoRouter
 
 
-### Api used -> https://fakestoreapi.com/docs
+### Api used : https://fakestoreapi.com/docs
