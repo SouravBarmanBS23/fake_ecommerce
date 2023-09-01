@@ -1,4 +1,5 @@
 import 'package:fake_ecommerce/src/core/router/routers.dart';
+import 'package:fake_ecommerce/src/features/authentication/login/presentation/pages/login_page.dart';
 import 'package:fake_ecommerce/src/features/cart/presentation/pages/cart_page.dart';
 import 'package:fake_ecommerce/src/features/home_product/home/presentation/home_page.dart';
 import 'package:fake_ecommerce/src/features/home_product/home/presentation/main_page.dart';
@@ -8,8 +9,8 @@ import 'package:go_router/go_router.dart';
 
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
 import '../../features/category_product/presentation/pages/category_page.dart';
+import 'go_router_provider.dart';
 
 
 final GlobalKey<NavigatorState> _rootState = GlobalKey(debugLabel: 'root');
@@ -17,14 +18,43 @@ final GlobalKey<NavigatorState> _shellState = GlobalKey(debugLabel: 'shell');
 
 
 final goRouterProvider = Provider<GoRouter>((ref){
+  bool isDuplicate = false;
+  final notifier = ref.read(goRouterNotifierProvider);
+
   return GoRouter(
       initialLocation: '/home',
       navigatorKey: _rootState,
+      refreshListenable: notifier,
+      redirect: (context, state) {
+
+        final isLoggedIn = notifier.isLoggedIn;
+        final isGoingToLogin = state.matchedLocation == '/login';
+
+        if (!isLoggedIn && !isGoingToLogin && !isDuplicate) {
+          isDuplicate = true;
+          return '/login';
+        }
+        if (isGoingToLogin && isGoingToLogin && !isDuplicate)  {
+          isDuplicate = true;
+          return '/';
+        }
+        if(isDuplicate) {
+          isDuplicate = false;
+        }
+        return null;
+
+      },
       routes: [
         GoRoute(
             name: RoutersName.root,
             path: '/home',
             builder: (context,state) => HomePage(key: state.pageKey,)
+        ),
+
+        GoRoute(
+          path: '/login',
+          name: RoutersName.login,
+          builder: (context, state) => LoginPage(key: state.pageKey),
         ),
 
         ShellRoute(

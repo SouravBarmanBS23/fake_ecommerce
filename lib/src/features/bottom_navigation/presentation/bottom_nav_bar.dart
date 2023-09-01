@@ -17,28 +17,32 @@ class _BottomNavBarState extends ConsumerState<BottomNavBar> {
 
     var position = ref.watch(bottomStateProvider);
 
-    return BottomNavigationBar(
-      items: const <BottomNavigationBarItem>[
-        BottomNavigationBarItem(
-          icon: Icon(Icons.home),
+    return NavigationBar(
+      destinations: const [
+        NavigationDestination(
+          selectedIcon: Icon(Icons.home,color: Colors.white,),
+          icon: Icon(Icons.home_outlined),
           label: 'Home',
         ),
-        BottomNavigationBarItem(
+        NavigationDestination(
+          selectedIcon: Icon(Icons.category_outlined,color: Colors.white),
           icon: Icon(Icons.category),
           label: 'Category',
         ),
-        BottomNavigationBarItem(
+        NavigationDestination(
+          selectedIcon: Icon(Icons.add_shopping_cart_outlined,color: Colors.white),
           icon: Icon(Icons.add_shopping_cart),
           label: 'Cart',
         ),
-        BottomNavigationBarItem(
+        NavigationDestination(
+          selectedIcon: Icon(Icons.settings_outlined,color: Colors.white),
           icon: Icon(Icons.settings),
           label: 'Settings',
         ),
       ],
-      currentIndex: position,
-      selectedItemColor: Colors.blueAccent,
-      onTap: _onItemTapped,
+      selectedIndex: position,
+      indicatorColor: Colors.blueAccent,
+      onDestinationSelected: _onItemTapped,
     );
   }
 
