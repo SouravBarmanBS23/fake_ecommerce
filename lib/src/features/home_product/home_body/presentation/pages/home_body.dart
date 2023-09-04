@@ -1,6 +1,10 @@
+import 'package:auto_size_text/auto_size_text.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
+import 'package:gaimon/gaimon.dart';
+import 'package:flutter/services.dart';
 import '../../../../../core/constant/constant_values.dart';
 
 class HomeBody extends ConsumerStatefulWidget {
@@ -11,39 +15,132 @@ class HomeBody extends ConsumerStatefulWidget {
 }
 
 class _HomeBodyState extends ConsumerState<HomeBody> {
+  final ScrollController _scrollController = ScrollController();
 
   @override
   Widget build(BuildContext context) {
-    screenWidth = MediaQuery.of(context).size.width;
-    screenHeight =  MediaQuery.of(context).size.height;
+    double cardWidth = MediaQuery.of(context).size.width / 3.3;
+    double cardHeight = MediaQuery.of(context).size.height / 5.0;
 
+    screenWidth = MediaQuery.of(context).size.width;
+    screenHeight = MediaQuery.of(context).size.height;
     return Flexible(
       child: Container(
-        color: Colors.blueAccent,
+        // color: Colors.blueAccent,
         width: double.infinity,
-        child: GridView.builder(
-          physics: BouncingScrollPhysics(),
-          shrinkWrap: false,
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2, // number of items in each row
-            mainAxisSpacing: 8.0, // spacing between rows
-            crossAxisSpacing: 8.0,
-            childAspectRatio: 20/19 ,
-            // spacing between columns
-          ),
-          padding: const EdgeInsets.all(8.0), // padding around the grid
-          itemCount: 10, // total number of items
-          itemBuilder: (context, index) {
-            return Container(
-              color: Colors.greenAccent, // color of grid items
-              child: Center(
-                child: Text(
-                  'text $index',
-                  style: const TextStyle(fontSize: 18.0, color: Colors.white),
+        child: Scrollbar(
+          controller: _scrollController,
+          thickness: 8,
+          thumbVisibility: false,
+          //trackVisibility : true,//According to your choice
+         // thumbVisibility: true, //
+          radius: const Radius.circular(5),
+          child: GridView.builder(
+            //physics: BouncingScrollPhysics(),
+            shrinkWrap: false,
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2, // number of items in each row
+              mainAxisSpacing: 8.0, // spacing between rows
+              crossAxisSpacing: 8.0,
+              childAspectRatio: cardWidth / cardHeight,
+              // spacing between columns
+            ),
+            padding: const EdgeInsets.all(8.0), // padding around the grid
+            itemCount: 10, // total number of items
+            itemBuilder: (context, index) {
+              return Container(
+                padding: EdgeInsets.all(2),
+                child: Container(
+                  child: Column(
+                    children: [
+                      Expanded(
+                        flex: 3,
+                        child: Container(
+                          padding: EdgeInsets.all(5),
+                          decoration: const BoxDecoration(
+                               color: Colors.white, // color of grid items
+                              // borderRadius: BorderRadius.circular(15),
+                              ),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(5),
+                            child: CachedNetworkImage(
+                              fit: BoxFit.cover,
+                              imageUrl:
+                                  "https://5.imimg.com/data5/OT/ET/MY-55314888/mens-cotton-jacket-500x500.jpg",
+                              placeholder: (context, url) =>
+                                  const Center(child: CircularProgressIndicator()),
+                              errorWidget: (context, url, error) =>
+                                  Icon(Icons.error),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        flex: 1,
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 10),
+                          color: const Color(0xfff1f2f4),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    SizedBox(height: 5,),
+                                    const AutoSizeText(
+                                      'Mens Casual Slim Fit',
+                                      style: TextStyle(
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.w500),
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                    SizedBox(height: 5,),
+                                    RatingBar.builder(
+                                      initialRating: 2.5,
+                                      minRating: 1,
+                                      itemSize : 15,
+                                      direction: Axis.horizontal,
+                                      allowHalfRating: true,
+                                      itemCount: 5,
+                                      itemPadding:
+                                          const EdgeInsets.symmetric(horizontal: 1.0),
+                                      itemBuilder: (context, _) => const Icon(
+                                        Icons.star,
+                                        color: Colors.blue,
+                                      ),
+                                      onRatingUpdate: (rating) {
+                                        print(rating);
+                                      },
+                                    ),
+                                    const SizedBox(height: 5,),
+                                    const Text('\$ 55.99'),
+
+                                  ],
+                                ),
+                              ),
+                              Container(
+                                margin: EdgeInsets.only(left: 10),
+                                width: 35,
+                                height: 35,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(100),
+                                  color: Colors.blue,
+                                ),
+                                child:  const Icon(Icons.add,
+                                    color: Colors.white, size: 25, weight: 5),
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            );
-          },
+              );
+            },
+          ),
         ),
       ),
     );

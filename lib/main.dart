@@ -1,7 +1,7 @@
 import 'package:fake_ecommerce/src/core/router/router_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
+import 'package:flutter/services.dart';
 
 void main() {
   runApp(const ProviderScope(child: MyApp()));
@@ -23,6 +23,7 @@ class _MyAppState extends ConsumerState<MyApp> {
 
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
+    // theme: ThemeData.dark(),
      //routerConfig: ref.,
       routeInformationParser: router.routeInformationParser,
       routeInformationProvider: router.routeInformationProvider,

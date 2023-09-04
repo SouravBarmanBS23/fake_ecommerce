@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:gaimon/gaimon.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../../../../core/constant/constant_values.dart';
@@ -117,9 +119,9 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                     height: 20,
                   ),
                   InkWell(
-                    onTap: (){
+                    onTap: () async {
                       ref.read(goRouterNotifierProvider).isLoggedIn = true;
-
+                      Gaimon.selection();
                     },
                     child: Container(
                       alignment: Alignment.center,
