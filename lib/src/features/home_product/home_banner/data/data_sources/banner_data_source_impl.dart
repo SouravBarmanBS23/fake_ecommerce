@@ -16,6 +16,7 @@ class BannerDataSourceImpl implements BannerDataSource{
 
   final RestClient client;
 
+
   @override
   Future<Response> banner() async {
 
@@ -25,5 +26,25 @@ class BannerDataSourceImpl implements BannerDataSource{
     );
     return response;
   }
+
+  // Future<Response> testData() async{
+  //
+  //   var map = <String, dynamic>{};
+  //   map['username'] = 'sourav';
+  //   map['password'] = '12345';
+  //
+  //   var headers = <String, String>{
+  //     'Content-Type': 'application/json', // Specify the content type as JSON
+  //     'Authorization': 'Bearer YOUR_ACCESS_TOKEN_HERE', // Replace with your actual Bearer token
+  //   };
+  //
+  //   final res = await client.post(
+  //       APIType.protected,
+  //       'products/category/jewelery',
+  //       headers
+  //   );
+  //
+  //   return res;
+  // }
 
 }

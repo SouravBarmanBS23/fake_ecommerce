@@ -128,7 +128,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                       height: 60,
                       width: double.infinity,
                       decoration: BoxDecoration(
-                        color: const Color(0xffF89AEE),
+                        color: Colors.blue,
                         borderRadius: BorderRadius.circular(14),
                       ),
                       child: Text(
