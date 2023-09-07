@@ -15,6 +15,8 @@ final homeBodyUseCasesProvider = Provider((ref){
   return HomeBodyUseCases(homeRepo: ref.watch(homeRepoProvider));
 });
 
+
+
 class HomeBodyUseCases{
   HomeBodyUseCases({
     required this.homeRepo,

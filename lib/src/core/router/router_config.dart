@@ -1,5 +1,6 @@
 import 'package:fake_ecommerce/src/core/router/routers.dart';
 import 'package:fake_ecommerce/src/features/authentication/login/presentation/pages/login_page.dart';
+import 'package:fake_ecommerce/src/features/authentication/registration/presentation/pages/registration_page.dart';
 import 'package:fake_ecommerce/src/features/cart/presentation/pages/cart_page.dart';
 import 'package:fake_ecommerce/src/features/home_product/home/presentation/home_page.dart';
 import 'package:fake_ecommerce/src/features/home_product/home/presentation/main_page.dart';
@@ -19,31 +20,31 @@ final GlobalKey<NavigatorState> _shellState = GlobalKey(debugLabel: 'shell');
 
 final goRouterProvider = Provider<GoRouter>((ref){
   bool isDuplicate = false;
-  final notifier = ref.read(goRouterNotifierProvider);
+  // final notifier = ref.read(goRouterNotifierProvider);
 
   return GoRouter(
-      initialLocation: '/home',
+      initialLocation: '/login',
       navigatorKey: _rootState,
-      refreshListenable: notifier,
-      redirect: (context, state) {
-
-        final isLoggedIn = notifier.isLoggedIn;
-        final isGoingToLogin = state.matchedLocation == '/login';
-
-        if (!isLoggedIn && !isGoingToLogin && !isDuplicate) {
-          isDuplicate = true;
-          return '/login';
-        }
-        if (isGoingToLogin && isGoingToLogin && !isDuplicate)  {
-          isDuplicate = true;
-          return '/';
-        }
-        if(isDuplicate) {
-          isDuplicate = false;
-        }
-        return null;
-
-      },
+      // refreshListenable: notifier,
+      // redirect: (context, state) {
+      //
+      //   final isLoggedIn = notifier.isLoggedIn;
+      //   final isGoingToLogin = state.matchedLocation == '/login';
+      //
+      //   if (!isLoggedIn && !isGoingToLogin && !isDuplicate) {
+      //     isDuplicate = true;
+      //     return '/login';
+      //   }
+      //   if (isGoingToLogin && isGoingToLogin && !isDuplicate)  {
+      //     isDuplicate = true;
+      //     return '/';
+      //   }
+      //   if(isDuplicate) {
+      //     isDuplicate = false;
+      //   }
+      //   return null;
+      //
+      // },
       routes: [
         GoRoute(
             name: RoutersName.root,
@@ -55,6 +56,11 @@ final goRouterProvider = Provider<GoRouter>((ref){
           path: '/login',
           name: RoutersName.login,
           builder: (context, state) => LoginPage(key: state.pageKey),
+        ),
+        GoRoute(
+          path: '/registration',
+          name: RoutersName.registration,
+          builder: (context, state) => RegistrationPage(key: state.pageKey),
         ),
 
         ShellRoute(

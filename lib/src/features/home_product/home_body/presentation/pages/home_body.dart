@@ -19,7 +19,6 @@ class HomeBody extends ConsumerStatefulWidget {
 class _HomeBodyState extends ConsumerState<HomeBody> {
   final ScrollController _scrollController = ScrollController();
 
-
   @override
   Widget build(BuildContext context) {
     double cardWidth = MediaQuery.of(context).size.width / 3.3;

@@ -3,9 +3,9 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gaimon/gaimon.dart';
 import 'package:google_fonts/google_fonts.dart';
-
 import '../../../../../core/constant/constant_values.dart';
 import '../../../../../core/router/go_router_provider.dart';
+import '../../../registration/presentation/pages/registration_page.dart';
 
 class LoginPage extends ConsumerStatefulWidget {
   const LoginPage({super.key});
@@ -120,7 +120,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                   ),
                   InkWell(
                     onTap: () async {
-                      ref.read(goRouterNotifierProvider).isLoggedIn = true;
+                   //   ref.read(goRouterNotifierProvider).isLoggedIn = true;
                       Gaimon.selection();
                     },
                     child: Container(
@@ -132,10 +132,38 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                         borderRadius: BorderRadius.circular(14),
                       ),
                       child: Text(
-                        'Sign in',
+                        'Sign In',
                         style: GoogleFonts.outfit(
                             fontWeight: FontWeight.w600,
-                            fontSize: 24,
+                            fontSize: 20,
+                            color: Colors.white),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  InkWell(
+                    onTap: () async {
+                      // ref.read(goRouterNotifierProvider).isLoggedIn = true;
+
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => const RegistrationPage(),),);
+
+                      HapticFeedback.mediumImpact();
+                    },
+                    child: Container(
+                      alignment: Alignment.center,
+                      height: 60,
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        color: const Color(0xffff7f56),
+                        borderRadius: BorderRadius.circular(14),
+                      ),
+                      child: Text(
+                        'Sign Up',
+                        style: GoogleFonts.outfit(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 20,
                             color: Colors.white),
                       ),
                     ),

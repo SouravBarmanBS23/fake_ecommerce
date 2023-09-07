@@ -10,6 +10,6 @@ class RoutersName{
   static String settings = 'settings';
 
   static String login = 'login';
-
+  static String registration = 'registration';
 
 }
