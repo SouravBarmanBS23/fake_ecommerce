@@ -12,6 +12,9 @@ class UserRegistrationRepoImpl implements UserRegistrationRepo {
   Future<bool> saveUserRegistration(RegistrationDataModel userRegistration) async {
     try {
       final userDataBox = await Hive.openBox('user_data');
+      if(userDataBox.isNotEmpty){
+        await userDataBox.clear();
+      }
       await userDataBox.add(userRegistration);
       print('Data saved to Hive');
       return true; // Indicate success

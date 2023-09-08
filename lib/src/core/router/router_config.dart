@@ -10,6 +10,7 @@ import 'package:go_router/go_router.dart';
 
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../features/authentication/login/presentation/providers/login_provider.dart';
 import '../../features/category_product/presentation/pages/category_page.dart';
 import 'go_router_provider.dart';
 
@@ -19,32 +20,11 @@ final GlobalKey<NavigatorState> _shellState = GlobalKey(debugLabel: 'shell');
 
 
 final goRouterProvider = Provider<GoRouter>((ref){
-  bool isDuplicate = false;
-  // final notifier = ref.read(goRouterNotifierProvider);
 
   return GoRouter(
       initialLocation: '/login',
       navigatorKey: _rootState,
-      // refreshListenable: notifier,
-      // redirect: (context, state) {
-      //
-      //   final isLoggedIn = notifier.isLoggedIn;
-      //   final isGoingToLogin = state.matchedLocation == '/login';
-      //
-      //   if (!isLoggedIn && !isGoingToLogin && !isDuplicate) {
-      //     isDuplicate = true;
-      //     return '/login';
-      //   }
-      //   if (isGoingToLogin && isGoingToLogin && !isDuplicate)  {
-      //     isDuplicate = true;
-      //     return '/';
-      //   }
-      //   if(isDuplicate) {
-      //     isDuplicate = false;
-      //   }
-      //   return null;
-      //
-      // },
+
       routes: [
         GoRoute(
             name: RoutersName.root,

@@ -9,10 +9,11 @@ final userRegistrationDataSourceProvider = Provider<UserRegistrationDataSource>(
 
 class UserRegistrationDataSourceImpl implements UserRegistrationDataSource{
   @override
-   Box<RegistrationDataModelAdapter> getUserRegistration() {
+   Future<Box> getUserRegistration() async{
     // It wil gives the box of user_info
-    return Hive.box<RegistrationDataModelAdapter>('user_info');
+    return  Hive.box<RegistrationDataModelAdapter>('user_info');
   }
+
   @override
   Future<bool> userAuthStatus() async {
   final auth = Hive.box<RegistrationDataModelAdapter>('user_info');

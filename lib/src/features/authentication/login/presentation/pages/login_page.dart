@@ -1,11 +1,15 @@
+import 'package:fake_ecommerce/src/features/home_product/home/presentation/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gaimon/gaimon.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../../../core/constant/constant_values.dart';
-import '../../../../../core/router/go_router_provider.dart';
+import '../../../../../core/router/routers.dart';
 import '../../../registration/presentation/pages/registration_page.dart';
+import '../../../registration/presentation/providers/registration_provider.dart';
+import '../providers/login_provider.dart';
 
 class LoginPage extends ConsumerStatefulWidget {
   const LoginPage({super.key});
@@ -15,13 +19,21 @@ class LoginPage extends ConsumerStatefulWidget {
 }
 
 class _LoginPageState extends ConsumerState<LoginPage> {
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
+
   @override
   Widget build(BuildContext context) {
 
     screenWidth = MediaQuery.of(context).size.width;
     screenHeight =  MediaQuery.of(context).size.height;
+    final loginState = ref.watch(loginCheckProvider);
+    final loginCheck = ref.read(loginCheckProvider.notifier);
 
-    return GestureDetector(
+    return loginState == LoginState.loading ? const Scaffold(body: Center(child: CircularProgressIndicator(),),):
+    loginState == LoginState.success ? const HomePage() : loginState == LoginState.initial ?
+      GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         backgroundColor: Colors.white,
@@ -31,7 +43,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                   SizedBox(height: screenHeight * 0.1,),
+                  SizedBox(height: screenHeight * 0.1,),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -59,6 +71,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                         borderRadius: BorderRadius.all(Radius.circular(15)),
                       ),
                       child: TextField(
+                        controller: _emailController,
                         decoration: InputDecoration(
                           contentPadding:
                           const EdgeInsets.only(left: 22, top: 4),
@@ -87,6 +100,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                         borderRadius: BorderRadius.all(Radius.circular(15)),
                       ),
                       child: TextField(
+                        controller: _passwordController,
                         decoration: InputDecoration(
                           contentPadding:
                           const EdgeInsets.only(left: 22, top: 4),
@@ -120,8 +134,10 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                   ),
                   InkWell(
                     onTap: () async {
-                   //   ref.read(goRouterNotifierProvider).isLoggedIn = true;
-                      Gaimon.selection();
+                      //   ref.read(goRouterNotifierProvider).isLoggedIn = true;
+                      print(_emailController.text.toString());
+                      print(_passwordController.text.toString());
+                      loginCheck.login(_emailController.text.toString(), _passwordController.text.toString());
                     },
                     child: Container(
                       alignment: Alignment.center,
@@ -144,11 +160,11 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                     height: 15,
                   ),
                   InkWell(
-                    onTap: () async {
+                    onTap: () {
                       // ref.read(goRouterNotifierProvider).isLoggedIn = true;
-
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => const RegistrationPage(),),);
-
+                      // GoRouter.of(context).go('/registration');
+                      ref.watch(registrationProvider.notifier).state = RegistrationState.initial;
+                      context.push('/registration');
                       HapticFeedback.mediumImpact();
                     },
                     child: Container(
@@ -307,7 +323,8 @@ class _LoginPageState extends ConsumerState<LoginPage> {
           ),
         ),
       ),
-    );
+    ) : const Scaffold(body: Center(child: Text('error'),),);
+
   }
 }
 
