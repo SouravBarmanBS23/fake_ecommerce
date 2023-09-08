@@ -13,5 +13,13 @@ class UserRegistrationDataSourceImpl implements UserRegistrationDataSource{
     // It wil gives the box of user_info
     return Hive.box<RegistrationDataModelAdapter>('user_info');
   }
-
+  @override
+  Future<bool> userAuthStatus() async {
+  final auth = Hive.box<RegistrationDataModelAdapter>('user_info');
+  if (auth.isNotEmpty) {
+    return true;
+  } else {
+    return false;
+  }
+}
 }

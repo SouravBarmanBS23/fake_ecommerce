@@ -2,7 +2,6 @@ import 'package:fake_ecommerce/src/core/router/router_config.dart';
 import 'package:fake_ecommerce/src/features/authentication/core/data/models/registration_data_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter/services.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:path_provider/path_provider.dart';
 
